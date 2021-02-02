@@ -11,7 +11,7 @@ import { auth,createUserProfileDocument } from './firebase/firebase.utils';
 const App = () =>  {
     const [currentUser,setCurrentUser] = useState(null)
 
-
+    console.log(currentUser);
     useEffect(()=> {
     const unSubscribeFromAuth  =  auth.onAuthStateChanged(async userAuth =>{
 

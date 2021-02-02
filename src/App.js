@@ -5,7 +5,7 @@ import {Switch,Route} from 'react-router-dom';
 import ShopPage from './pages/shoppage/shoppage.components'
 import Header from './components/header/header.components';
 import SignInSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.components'
-import { auth } from './firebase/firebase.utils';
+import { auth,createUserProfileDocument } from './firebase/firebase.utils';
 
 
 const App = () =>  {
@@ -13,15 +13,23 @@ const App = () =>  {
 
 
     useEffect(()=> {
-    const unSubscribeFromAuth  =  auth.onAuthStateChanged((user)=>{
-            setCurrentUser(user)
-           console.log(currentUser)
+    const unSubscribeFromAuth  =  auth.onAuthStateChanged(async userAuth =>{
+
+           if(userAuth) {
+               const userRef = await createUserProfileDocument(userAuth);
+
+               userRef.onSnapshot(snapshot => {
+                   setCurrentUser({id:snapshot.id,...snapshot.data()})
+               })
+           }else{
+                setCurrentUser(userAuth);
+           }
 
         return () => unSubscribeFromAuth();
 
         })
-    })
-
+    },[])
+console.log(currentUser)
 
   return (
     <div className="App">

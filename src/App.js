@@ -11,17 +11,21 @@ import { auth } from './firebase/firebase.utils';
 const App = () =>  {
     const [currentUser,setCurrentUser] = useState(null)
 
-    useEffect(()=> {
-        auth.onAuthStateChanged((user)=>{
-            setCurrentUser(currentUser)
-            console.log(user)
-        })
 
-    },[])
+    useEffect(()=> {
+    const unSubscribeFromAuth  =  auth.onAuthStateChanged((user)=>{
+            setCurrentUser(user)
+           console.log(currentUser)
+
+        return () => unSubscribeFromAuth();
+
+        })
+    })
+
 
   return (
     <div className="App">
-      <Header/>
+      <Header currentUser={currentUser}/>
       <Switch>
          <Route exact path='/' component={HomePage}/>
           <Route path='/shop' component={ShopPage}/>

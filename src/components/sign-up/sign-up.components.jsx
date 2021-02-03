@@ -58,11 +58,13 @@ const SignUp = () => {
             <h2 className="title">i do not have an account</h2>
             <span>sign up with your email and password</span>
             <form className="sign-up-form" onSubmit={handleSubmit}>
-                <FormInput type="text" name="displayName"
-                           value={details.displayName}
-                           onChange={handleChange}
-                           label="Display Name"
-                           required>
+                <FormInput
+                    type="text" name="displayName"
+                    value={details.displayName}
+                    onChange={handleChange}
+                    label="Display Name"
+                    required
+                >
 
                 </FormInput>
                 <FormInput type="email" name="email"
